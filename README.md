@@ -1,4 +1,4 @@
 stjoy
 =====
 
-cheat joystick driver
+stjoy - cheat joystick driver

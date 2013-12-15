@@ -1,0 +1,55 @@
+[0] [1] [2] [3] [4] [5] [6] [7]
+
+		|_____| |_____|
+                 press    btn#
+
+
+BTN_A = 0100
+BTN_A_PRESS= 0100
+BTN_A_RELEASE= 0000
+
+BTN_B = 0101
+BTN_B_PRESS= 0100
+BTN_B_RELEASE= 0000
+
+BTN_X = 0102
+BTN_X_PRESS = 0100
+BTN_X_RELEASE = 0000
+
+BTN_Y = 0103
+BTN_Y_PRESS = 0100
+BTN_Y_RELEASE = 0000
+
+BTN_RT = 0205       ----> EV_ABS (ABS_RZ)
+BTN_RT_PRESS = ff7f 
+BTN_RT_RELEASE = 0180
+
+BTN_RB = 0105      ----> BTN_TR
+BTN_RB_PRESS = 0100 
+BTN_RB_RELEASE = 0000
+
+BTN_LT = 0202     -----> EV_ABS (ABS_Z)
+BTN_LT_PRESS = ff7f 
+BTN_LT_RELEASE = 0180
+
+BTN_LB = 0104     ----> BTN_TL
+BTN_LB_PRESS = 0100 
+BTN_LB_RELEASE = 0000
+
+
+[0] [1] [2] [3] [4] [5] [6] [7]
+
+		|_____| |_____|
+                 up/dw    eix
+
+ABS_HAT0X = 02 06
+ABS_HAT0X_RIGHT= ff7f
+ABS_HAT0X_CENTER= 0000
+ABS_HAT0X_LEFT= 0180
+
+ABS_HAT0Y = 02 07
+ABS_HAT0Y_UP= 0180
+ABS_HAT0Y_CENTER= 0000
+ABS_HAT0Y_DOWN= ff7f
+
+
