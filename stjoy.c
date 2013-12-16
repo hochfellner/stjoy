@@ -320,7 +320,7 @@ int main (int argc, char *argv[]) {
 				if (write (fd_uinput, &ev[1], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(27);
-				// press RB
+				// press Y
 				if (write (fd_uinput, &ev_button[7], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(18000);
@@ -328,7 +328,7 @@ int main (int argc, char *argv[]) {
 				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(12000);
-				// release RB
+				// release Y
 				if (write (fd_uinput, &ev_button[6], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(12000);
@@ -370,6 +370,10 @@ int main (int argc, char *argv[]) {
 				// press Y 
 				if (write (fd_uinput, &ev_button[7], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+				// press X (we can "piano" in the 2nd one)
+				if (write (fd_uinput, &ev_button[5], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(18000);
 				// y/neutral
 				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
@@ -377,6 +381,10 @@ int main (int argc, char *argv[]) {
 				usleep(12000);
 				// release Y
 				if (write (fd_uinput, &ev_button[6], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+				// release X (we can "piano" in the 2nd one)
+				if (write (fd_uinput, &ev_button[4], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(12000);
 				// x/neutral x
@@ -552,6 +560,10 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				// press X
 				if (write (fd_uinput, &ev_button[5], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+				// press Y (we can "piano" in the 2nd one)
+				if (write (fd_uinput, &ev_button[7], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(18000);
 				// y/neutral
 				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
@@ -559,6 +571,10 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				usleep(12000);
 				// release X
 				if (write (fd_uinput, &ev_button[4], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+				// release Y (we can "piano" in the 2nd one)
+				if (write (fd_uinput, &ev_button[6], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(12000);
 				// x/neutral x
