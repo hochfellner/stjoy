@@ -290,79 +290,8 @@ int main (int argc, char *argv[]) {
 			if (buffer[4]==1 && buffer[5]==0)
 				if (write (fd_uinput, &ev_button[9], sizeof (struct input_event)) < 0) die ("error: write");
 */
-			// DP left on release, DP Right on press
-			if (buffer[4]==0 && buffer[5]==0) {
-				usleep(50000);
-				// x/neutral
-				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(500);
-				// y/neutral
-				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(500);
-				// x/left
-				if (write (fd_uinput, &ev[2], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
-				// x/neutral
-				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(27);
-				// y/down
-				if (write (fd_uinput, &ev[4], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
-				// x/neutral
-				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
-				// x/left
-				if (write (fd_uinput, &ev[2], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(27);
-				// press RB 
-				if (write (fd_uinput, &ev_button[11], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
-				// y/neutral
-				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
-				// release RB
-				if (write (fd_uinput, &ev_button[10], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
-				// x/neutral x
-				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(500);
-
-				// restore x&y state
-
-				if (x_state==0) 
-					if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
-				if (x_state==1)
-					if (write (fd_uinput, &ev[1], sizeof (struct input_event)) < 0) die ("error: write");
-				if (x_state==-1)
-					if (write (fd_uinput, &ev[2], sizeof (struct input_event)) < 0) die ("error: write");
-
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(500);
-
-				if (y_state==0)
-					if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
-				if (y_state==1)
-					if (write (fd_uinput, &ev[4], sizeof (struct input_event)) < 0) die ("error: write");
-				if (y_state==-1)
-					if (write (fd_uinput, &ev[5], sizeof (struct input_event)) < 0) die ("error: write");
-
-				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(500);
-
-			}
-
-			if (buffer[4]==1 && buffer[5]==0) {
+			if (buffer[4]==1 && buffer[5]==0) { // LB button press
+				/* DP RIGHT */
 				// x/neutral
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
@@ -392,7 +321,7 @@ int main (int argc, char *argv[]) {
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(27);
 				// press RB
-				if (write (fd_uinput, &ev_button[11], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_button[7], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(20000);
 				// y/neutral
@@ -400,11 +329,80 @@ int main (int argc, char *argv[]) {
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(15000);
 				// release RB
-				if (write (fd_uinput, &ev_button[10], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_button[6], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(15000);
 				// x/neutral x
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+
+				/* DP LEFT */
+				usleep(100000);
+				// x/neutral
+				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+				// y/neutral
+				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+				// x/left
+				if (write (fd_uinput, &ev[2], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(20000);
+				// x/neutral
+				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(27);
+				// y/down
+				if (write (fd_uinput, &ev[4], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(20000);
+				// x/neutral
+				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(15000);
+				// x/left
+				if (write (fd_uinput, &ev[2], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(27);
+				// press Y 
+				if (write (fd_uinput, &ev_button[7], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(20000);
+				// y/neutral
+				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(15000);
+				// release Y
+				if (write (fd_uinput, &ev_button[6], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(15000);
+				// x/neutral x
+				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+
+				// restore x&y state
+
+				if (x_state==0) 
+					if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
+				if (x_state==1)
+					if (write (fd_uinput, &ev[1], sizeof (struct input_event)) < 0) die ("error: write");
+				if (x_state==-1)
+					if (write (fd_uinput, &ev[2], sizeof (struct input_event)) < 0) die ("error: write");
+
+				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
+				usleep(500);
+
+				if (y_state==0)
+					if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
+				if (y_state==1)
+					if (write (fd_uinput, &ev[4], sizeof (struct input_event)) < 0) die ("error: write");
+				if (y_state==-1)
+					if (write (fd_uinput, &ev[5], sizeof (struct input_event)) < 0) die ("error: write");
+
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(500);
 
