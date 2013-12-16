@@ -472,9 +472,8 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				if (write (fd_uinput, &ev_button[21], sizeof (struct input_event)) < 0) die ("error: write");
 			*/
 
-			// DP left on press, DP right on release
-
-			if (buffer[4]==0xff && buffer[5]==0x7f) {
+			if (buffer[4]==1 && buffer[5]==0x80) {
+				/* DP LEFT */
 				// x/neutral
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
@@ -486,7 +485,7 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				// x/left
 				if (write (fd_uinput, &ev[2], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
+				usleep(18000);
 				// x/neutral
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
@@ -494,11 +493,11 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				// y/down
 				if (write (fd_uinput, &ev[4], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
+				usleep(18000);
 				// x/neutral
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
+				usleep(12000);
 				// x/left
 				if (write (fd_uinput, &ev[2], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
@@ -506,23 +505,22 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				// press X
 				if (write (fd_uinput, &ev_button[5], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
+				usleep(18000);
 				// y/neutral
 				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
+				usleep(12000);
 				// release X
 				if (write (fd_uinput, &ev_button[4], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
+				usleep(12000);
 				// x/neutral x
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
 				usleep(500);
-			}
 
-			if (buffer[4]==1 && buffer[5]==0x80) {
-				usleep(50000);
+				/* DP RIGHT */
+				usleep(100000);
 				// x/neutral
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
@@ -534,7 +532,7 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				// x/right
 				if (write (fd_uinput, &ev[1], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
+				usleep(18000);
 				// x/neutral
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
@@ -542,11 +540,11 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				// y/down
 				if (write (fd_uinput, &ev[4], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
+				usleep(18000);
 				// x/neutral
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
+				usleep(12000);
 				// x/right
 				if (write (fd_uinput, &ev[1], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
@@ -554,15 +552,15 @@ Event: time 1387128747.381499, type 3 (EV_ABS), code 16 (ABS_HAT0X), value 0    
 				// press X
 				if (write (fd_uinput, &ev_button[5], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(20000);
+				usleep(18000);
 				// y/neutral
 				if (write (fd_uinput, &ev[3], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
+				usleep(12000);
 				// release X
 				if (write (fd_uinput, &ev_button[4], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
-				usleep(15000);
+				usleep(12000);
 				// x/neutral x
 				if (write (fd_uinput, &ev[0], sizeof (struct input_event)) < 0) die ("error: write");
 				if (write (fd_uinput, &ev_sync, sizeof (struct input_event)) < 0) die ("error state");
