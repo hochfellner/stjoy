@@ -815,9 +815,44 @@ static int print_events(int fd)
 					ev[i].code,
 					names[ev[i].type] ? (names[ev[i].type][ev[i].code] ? names[ev[i].type][ev[i].code] : "?") : "?");
 				if (ev[i].type == EV_MSC && (ev[i].code == MSC_RAW || ev[i].code == MSC_SCAN))
-					printf("value %02x\n", ev[i].value);
+					printf("value %02x", ev[i].value);
 				else
-					printf("value %d\n", ev[i].value);
+					printf("value %d", ev[i].value);
+
+				if (ev[i].type==3 && ev[i].code==16 && ev[i].value==1) printf ("\tx/right");
+				if (ev[i].type==3 && ev[i].code==16 && ev[i].value==0) printf ("\tx/neutral");
+				if (ev[i].type==3 && ev[i].code==16 && ev[i].value==-1) printf ("\tx/left");
+
+				if (ev[i].type==3 && ev[i].code==17 && ev[i].value==1) printf ("\ty/down");
+				if (ev[i].type==3 && ev[i].code==17 && ev[i].value==0) printf ("\ty/neutral");
+				if (ev[i].type==3 && ev[i].code==17 && ev[i].value==-1) printf ("\ty/up");
+
+				if (ev[i].type==1 && ev[i].code==307 && ev[i].value==1) printf ("\t\tLP/press");
+				if (ev[i].type==1 && ev[i].code==307 && ev[i].value==0) printf ("\t\tLP/release");
+
+				if (ev[i].type==1 && ev[i].code==308 && ev[i].value==1) printf ("\t\tMP/press");
+				if (ev[i].type==1 && ev[i].code==308 && ev[i].value==0) printf ("\t\tMP/release");
+
+				if (ev[i].type==1 && ev[i].code==311 && ev[i].value==1) printf ("\t\tHP/press");
+				if (ev[i].type==1 && ev[i].code==311 && ev[i].value==0) printf ("\t\tHP/release");
+
+				if (ev[i].type==1 && ev[i].code==304 && ev[i].value==1) printf ("\t\tLK/press");
+				if (ev[i].type==1 && ev[i].code==304 && ev[i].value==0) printf ("\t\tLK/release");
+
+				if (ev[i].type==1 && ev[i].code==305 && ev[i].value==1) printf ("\t\tMK/press");
+				if (ev[i].type==1 && ev[i].code==305 && ev[i].value==0) printf ("\t\tMK/release");
+
+				if (ev[i].type==3 && ev[i].code==5 && ev[i].value==255) printf ("\t\tHK/press");
+				if (ev[i].type==3 && ev[i].code==5 && ev[i].value==0) printf ("\t\tHK/release");
+
+				/* extra buttons */
+				if (ev[i].type==1 && ev[i].code==310 && ev[i].value==1) printf ("\t\tHP/press*");
+				if (ev[i].type==1 && ev[i].code==310 && ev[i].value==0) printf ("\t\tHP/release*");
+
+				if (ev[i].type==3 && ev[i].code==2 && ev[i].value==255) printf ("\t\tHK/press*");
+				if (ev[i].type==3 && ev[i].code==2 && ev[i].value==0) printf ("\t\tHK/release*");
+
+				printf("\n");
 			}
 		}
 
