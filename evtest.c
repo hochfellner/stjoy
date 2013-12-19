@@ -1,6 +1,7 @@
 /*
  *  Copyright (c) 1999-2000 Vojtech Pavlik
  *  Copyright (c) 2009-2011 Red Hat, Inc
+ *  Copyright (c) 2013 Pau Oliva (@pof)
  */
 
 /**
@@ -758,6 +759,13 @@ static int print_device_info(int fd)
 	return 0;
 }
 
+int time_elapsed_ms (struct timeval *start, struct timeval *end, int ms) {
+        int difference = (end->tv_usec + end->tv_sec * 1000000) - (start->tv_usec + start->tv_sec * 1000000);
+        if (difference > ms * 1000)
+                return 1;
+        return 0;
+}
+
 /**
  * Print device events as they come in.
  *
@@ -769,6 +777,15 @@ static int print_events(int fd)
 	struct input_event ev[64];
 	int i, rd;
 
+	struct timeval tv_current;
+	struct timeval tv_prev;
+
+	tv_current.tv_sec=0;
+	tv_current.tv_usec=0;
+
+	tv_prev.tv_sec=0;
+	tv_prev.tv_usec=0;
+
 	while (1) {
 		rd = read(fd, ev, sizeof(struct input_event) * 64);
 
@@ -779,14 +796,19 @@ static int print_events(int fd)
 		}
 
 		for (i = 0; i < rd / sizeof(struct input_event); i++) {
-			printf("Event: time %ld.%06ld, ", ev[i].time.tv_sec, ev[i].time.tv_usec);
 
-			if (ev[i].type == EV_SYN) {
-				if (ev[i].code == SYN_MT_REPORT)
-					printf("++++++++++++++ %s ++++++++++++\n", syns[ev[i].code]);
-				else
-					printf("-------------- %s ------------\n", syns[ev[i].code]);
-			} else {
+			if (ev[i].type != EV_SYN) {
+
+				tv_prev=tv_current;
+
+				tv_current.tv_usec= ev[i].time.tv_usec;
+				tv_current.tv_sec= ev[i].time.tv_sec;
+
+				if (time_elapsed_ms(&tv_prev,&tv_current, 300)) {
+					printf("\n\n\n\n");
+				}
+
+				printf("%ld.%06ld, ", ev[i].time.tv_sec, ev[i].time.tv_usec);
 				printf("type %d (%s), code %d (%s), ",
 					ev[i].type,
 					events[ev[i].type] ? events[ev[i].type] : "?",
