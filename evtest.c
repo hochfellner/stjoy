@@ -759,8 +759,11 @@ static int print_device_info(int fd)
 	return 0;
 }
 
-int time_elapsed_ms (struct timeval *start, struct timeval *end, int ms) {
+int time_elapsed_ms (struct timeval *start, struct timeval *end, int ms, int print) {
         int difference = (end->tv_usec + end->tv_sec * 1000000) - (start->tv_usec + start->tv_sec * 1000000);
+	if (print==1) {
+		printf ("time: %d ms\n", difference / 1000);
+	}
         if (difference > ms * 1000)
                 return 1;
         return 0;
@@ -780,11 +783,21 @@ static int print_events(int fd)
 	struct timeval tv_current;
 	struct timeval tv_prev;
 
+	struct timeval tv_start;
+	struct timeval tv_end;
+
 	tv_current.tv_sec=0;
 	tv_current.tv_usec=0;
 
 	tv_prev.tv_sec=0;
 	tv_prev.tv_usec=0;
+
+	tv_start.tv_sec=0;
+	tv_start.tv_usec=0;
+
+	tv_end.tv_sec=0;
+	tv_end.tv_usec=0;
+
 
 	while (1) {
 		rd = read(fd, ev, sizeof(struct input_event) * 64);
@@ -804,8 +817,18 @@ static int print_events(int fd)
 				tv_current.tv_usec= ev[i].time.tv_usec;
 				tv_current.tv_sec= ev[i].time.tv_sec;
 
-				if (time_elapsed_ms(&tv_prev,&tv_current, 300)) {
+				if (time_elapsed_ms(&tv_prev,&tv_current, 300, 0)) {
+
+					//gettimeofday (&tv_end, NULL);
+					tv_end.tv_usec= tv_prev.tv_usec;
+					tv_end.tv_sec= tv_prev.tv_sec;
+
+					time_elapsed_ms(&tv_start,&tv_end, 0, 1);
 					printf("\n\n\n\n");
+
+					//gettimeofday (&tv_start, NULL);
+					tv_start.tv_usec= ev[i].time.tv_usec;
+					tv_start.tv_sec= ev[i].time.tv_sec;
 				}
 
 				printf("%ld.%06ld, ", ev[i].time.tv_sec, ev[i].time.tv_usec);
@@ -827,30 +850,30 @@ static int print_events(int fd)
 				if (ev[i].type==3 && ev[i].code==17 && ev[i].value==0) printf ("\ty/neutral");
 				if (ev[i].type==3 && ev[i].code==17 && ev[i].value==-1) printf ("\ty/up");
 
-				if (ev[i].type==1 && ev[i].code==307 && ev[i].value==1) printf ("\t\tLP/press");
-				if (ev[i].type==1 && ev[i].code==307 && ev[i].value==0) printf ("\t\tLP/release");
+				if (ev[i].type==1 && ev[i].code==307 && ev[i].value==1) printf ("\t\tLP/press (jab)");
+				if (ev[i].type==1 && ev[i].code==307 && ev[i].value==0) printf ("\t\tLP/release (jab)");
 
-				if (ev[i].type==1 && ev[i].code==308 && ev[i].value==1) printf ("\t\tMP/press");
-				if (ev[i].type==1 && ev[i].code==308 && ev[i].value==0) printf ("\t\tMP/release");
+				if (ev[i].type==1 && ev[i].code==308 && ev[i].value==1) printf ("\t\tMP/press (strong)");
+				if (ev[i].type==1 && ev[i].code==308 && ev[i].value==0) printf ("\t\tMP/release (strong)");
 
-				if (ev[i].type==1 && ev[i].code==311 && ev[i].value==1) printf ("\t\tHP/press");
-				if (ev[i].type==1 && ev[i].code==311 && ev[i].value==0) printf ("\t\tHP/release");
+				if (ev[i].type==1 && ev[i].code==311 && ev[i].value==1) printf ("\t\tHP/press (fierce)");
+				if (ev[i].type==1 && ev[i].code==311 && ev[i].value==0) printf ("\t\tHP/release (fierce)");
 
-				if (ev[i].type==1 && ev[i].code==304 && ev[i].value==1) printf ("\t\tLK/press");
-				if (ev[i].type==1 && ev[i].code==304 && ev[i].value==0) printf ("\t\tLK/release");
+				if (ev[i].type==1 && ev[i].code==304 && ev[i].value==1) printf ("\t\tLK/press (short)");
+				if (ev[i].type==1 && ev[i].code==304 && ev[i].value==0) printf ("\t\tLK/release (short)");
 
-				if (ev[i].type==1 && ev[i].code==305 && ev[i].value==1) printf ("\t\tMK/press");
-				if (ev[i].type==1 && ev[i].code==305 && ev[i].value==0) printf ("\t\tMK/release");
+				if (ev[i].type==1 && ev[i].code==305 && ev[i].value==1) printf ("\t\tMK/press (forward)");
+				if (ev[i].type==1 && ev[i].code==305 && ev[i].value==0) printf ("\t\tMK/release (forward)");
 
-				if (ev[i].type==3 && ev[i].code==5 && ev[i].value==255) printf ("\t\tHK/press");
-				if (ev[i].type==3 && ev[i].code==5 && ev[i].value==0) printf ("\t\tHK/release");
+				if (ev[i].type==3 && ev[i].code==5 && ev[i].value==255) printf ("\t\tHK/press (roundhouse)");
+				if (ev[i].type==3 && ev[i].code==5 && ev[i].value==0) printf ("\t\tHK/release (roundhouse)");
 
 				/* extra buttons */
-				if (ev[i].type==1 && ev[i].code==310 && ev[i].value==1) printf ("\t\tHP/press*");
-				if (ev[i].type==1 && ev[i].code==310 && ev[i].value==0) printf ("\t\tHP/release*");
+				if (ev[i].type==1 && ev[i].code==310 && ev[i].value==1) printf ("\t\tHP/press* (fierce)");
+				if (ev[i].type==1 && ev[i].code==310 && ev[i].value==0) printf ("\t\tHP/release* (fierce)");
 
-				if (ev[i].type==3 && ev[i].code==2 && ev[i].value==255) printf ("\t\tHK/press*");
-				if (ev[i].type==3 && ev[i].code==2 && ev[i].value==0) printf ("\t\tHK/release*");
+				if (ev[i].type==3 && ev[i].code==2 && ev[i].value==255) printf ("\t\tHK/press* (roundhouse)");
+				if (ev[i].type==3 && ev[i].code==2 && ev[i].value==0) printf ("\t\tHK/release* (roundhouse)");
 
 				printf("\n");
 			}
